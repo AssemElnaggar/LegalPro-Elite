@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -6,7 +7,15 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "10mb",
     },
   },
-  // إضافة turbopack config فارغ لتجنب الأخطاء
+  webpack: (config) => {
+    config.resolve.plugins = config.resolve.plugins || [];
+    config.resolve.plugins.push(
+      new TsconfigPathsPlugin({
+        configFile: "./tsconfig.json",
+      })
+    );
+    return config;
+  },
   turbopack: {},
 };
 
