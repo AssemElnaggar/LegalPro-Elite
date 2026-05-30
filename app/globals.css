@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(192, 165, 108, 0.16), transparent 35%),
+    linear-gradient(180deg, #f7f2e8 0%, #f3f5f8 20%, #eef2f6 100%);
+  color: #102033;
+  font-family: var(--font-body), "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.85;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body {
+  background:
+    radial-gradient(circle at top, rgba(205, 168, 89, 0.14), transparent 35%),
+    linear-gradient(180deg, #07101c 0%, #0c1726 30%, #0f1b2d 100%);
+  color: #ebeff8;
+}
+
+@layer base {
+  * {
+    @apply border-slate-200 dark:border-white/10;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .section-title,
+  .kpi-value,
+  .nav-link,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    font-family: var(--font-display), var(--font-body), sans-serif;
+    letter-spacing: normal;
+  }
+
+  a,
+  button {
+    @apply transition-all duration-200;
+  }
+
+  button,
+  input,
+  select,
+  textarea,
+  option,
+  label,
+  table,
+  th,
+  td {
+    font-family: var(--font-body), "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply outline-none;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  ::placeholder {
+    font-weight: 500;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-3xl border border-white/60 bg-white/85 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur dark:border-white/10 dark:bg-slate-950/55 dark:shadow-[0_24px_80px_rgba(2,6,23,0.45)];
+  }
+
+  .panel-muted {
+    @apply rounded-2xl border border-slate-200/70 bg-slate-50/80 dark:border-white/10 dark:bg-white/5;
+  }
+
+  .section-title {
+    @apply text-xl font-extrabold text-slate-900 dark:text-white;
+    line-height: 1.55;
+  }
+
+  .section-subtitle {
+    @apply text-sm text-slate-600 dark:text-slate-300;
+    line-height: 1.9;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-[0.95rem] text-slate-900 shadow-inner shadow-slate-100 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:shadow-none dark:placeholder:text-slate-500 dark:focus:border-amber-400 dark:focus:ring-amber-500/25;
+    font-weight: 600;
+    line-height: 1.8;
+  }
+
+  .select {
+    @apply appearance-none;
+  }
+
+  .textarea {
+    @apply min-h-28 resize-y;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    @apply inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold shadow-lg shadow-slate-900/5;
+    line-height: 1.4;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:brightness-105;
+  }
+
+  .btn-secondary {
+    @apply border border-slate-200 bg-white/90 text-slate-700 hover:border-amber-300 hover:text-amber-700 dark:border-white/10 dark:bg-white/6 dark:text-slate-100 dark:hover:border-amber-400/40 dark:hover:text-amber-200;
+  }
+
+  .btn-danger {
+    @apply border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200 dark:hover:bg-red-500/15;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200;
+  }
+
+  .badge-warning {
+    @apply border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200;
+  }
+
+  .badge-danger {
+    @apply border-red-200 bg-red-50 text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200;
+  }
+
+  .badge-info {
+    @apply border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200;
+  }
+
+  .stat-card {
+    @apply rounded-3xl border border-white/60 bg-white/85 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur dark:border-white/10 dark:bg-slate-950/55 dark:shadow-[0_24px_80px_rgba(2,6,23,0.45)];
+  }
+
+  .table-shell {
+    @apply w-full min-w-[780px] text-sm;
+  }
+
+  .table-shell thead th {
+    @apply bg-slate-50/80 px-4 py-3 text-right font-semibold text-slate-600 dark:bg-white/5 dark:text-slate-300;
+  }
+
+  .table-shell tbody td {
+    @apply border-t border-slate-200/70 px-4 py-3 align-top text-slate-700 dark:border-white/10 dark:text-slate-200;
+  }
+
+  .table-shell tbody tr:hover {
+    @apply bg-amber-50/50 dark:bg-amber-500/5;
+  }
+
+  .nav-link {
+    @apply flex items-center justify-between rounded-2xl border border-transparent px-4 py-3 text-sm text-slate-600 hover:border-amber-200 hover:bg-amber-50 hover:text-slate-900 dark:text-slate-300 dark:hover:border-amber-500/20 dark:hover:bg-amber-500/10 dark:hover:text-white;
+  }
+
+  .nav-link-active {
+    @apply border-amber-300 bg-gradient-to-r from-amber-100 to-yellow-50 text-slate-950 dark:border-amber-500/30 dark:from-amber-500/15 dark:to-yellow-500/10 dark:text-amber-100;
+  }
+
+  .kpi-value {
+    @apply mt-3 text-3xl font-black tracking-tight text-slate-950 dark:text-white;
+  }
+}
