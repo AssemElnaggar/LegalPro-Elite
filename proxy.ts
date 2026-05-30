@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const SESSION_COOKIE = "legalpro_session";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get(SESSION_COOKIE)?.value;
   const protectedPath = request.nextUrl.pathname.startsWith("/dashboard");
   const protectedApi = request.nextUrl.pathname.startsWith("/api/documents") || request.nextUrl.pathname.startsWith("/api/reports");

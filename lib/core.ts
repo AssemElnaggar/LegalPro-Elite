@@ -489,13 +489,27 @@ async function seedRolePermissions() {
   await db.insert(rolePermissions).values(inserts);
 }
 
+let seedingPromise: Promise<void> | null = null;
+let seedingDone = false;
+
 export async function ensureSystemSeeded() {
-  await ensureUploadRoot();
+  if (seedingDone) return;
+  if (seedingPromise) {
+    await seedingPromise;
+    return;
+  }
 
-  const [existingUsers] = await db.select({ count: sql<number>`count(*)::int` }).from(users);
-  if ((existingUsers?.count ?? 0) > 0) return;
+  seedingPromise = (async () => {
+    try {
+      await ensureUploadRoot();
 
-  await seedRolePermissions();
+      const [existingUsers] = await db.select({ count: sql<number>`count(*)::int` }).from(users);
+      if ((existingUsers?.count ?? 0) > 0) {
+        seedingDone = true;
+        return;
+      }
+
+      await seedRolePermissions();
 
   const adminId = randomUUID();
   const lawyerId = randomUUID();
@@ -737,6 +751,15 @@ export async function ensureSystemSeeded() {
       description: "تم تهيئة نظام LegalPro Elite وإضافة البيانات التجريبية الأساسية.",
     },
   ]);
+      seedingDone = true;
+    } catch (error) {
+      console.error("Database seeding failed:", error);
+      seedingPromise = null;
+      throw error;
+    }
+  })();
+
+  await seedingPromise;
 }
 
 export async function logActivity(
